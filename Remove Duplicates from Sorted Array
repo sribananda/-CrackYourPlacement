@@ -1,0 +1,15 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int n = nums.length;
+        int i = 0;
+        int j = 1;
+        while(j < n){
+            if(nums[i] != nums[j]){ //got the unique element
+                i++; //Make the space for the unique element by shifting the other element
+                nums[i] = nums[j];
+            }
+            j++; //will search for the unique element throughout the loop
+        }
+        return i + 1;
+    }
+}
