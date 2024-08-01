@@ -1,0 +1,47 @@
+class Solution {
+    public boolean isNumber(String s) {
+        boolean digitSeen = false, eSeen = false, dotSeen = false;
+        int countPlusMinus = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            // Digit
+            if (Character.isDigit(ch)) {
+                digitSeen = true;
+            }
+            // Plus/Minus
+            else if (ch == '+' || ch == '-') {
+                // Plus/Minus can only be at the start or after an 'e' or 'E'
+                if (countPlusMinus == 2 || (i > 0 && s.charAt(i - 1) != 'e' && s.charAt(i - 1) != 'E') || i == s.length() - 1) {
+                    return false;
+                }
+                countPlusMinus++;
+            }
+            // Dot
+            else if (ch == '.') {
+                // Dot can only appear once and not after 'e' or 'E'
+                if (dotSeen || eSeen) {
+                    return false;
+                }
+                dotSeen = true;
+            }
+            // e/E
+            else if (ch == 'e' || ch == 'E') {
+                // 'e' or 'E' can only appear once and must follow a digit and cannot be at the end
+                if (eSeen || !digitSeen || i == s.length() - 1) {
+                    return false;
+                }
+                eSeen = true;
+                // Reset for the exponent part
+                countPlusMinus = 0;
+                digitSeen = false;  // Expecting a digit after 'e'
+            }
+            // Invalid character
+            else {
+                return false;
+            }
+        }
+        return digitSeen;
+    }
+}
