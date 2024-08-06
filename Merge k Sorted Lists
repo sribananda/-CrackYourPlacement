@@ -1,0 +1,35 @@
+class Solution {
+    ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1 == null)
+            return list2;
+        if(list2 == null)
+            return list1;
+        ListNode result;
+        if(list1.val < list2.val){
+            result = list1;
+            result.next = mergeTwoLists(list1.next, list2);
+        }else{
+            result = list2;
+            result.next = mergeTwoLists(list1, list2.next);
+        }
+        return result;    
+    }
+    ListNode PartitionAndMerge(int start, int end, ListNode[] lists){
+        if(start > end)
+            return null;
+        if(start == end)
+            return lists[start];
+        
+        int mid = start + (end - start) / 2;
+        ListNode L1 = PartitionAndMerge(start, mid,lists);
+        ListNode L2 = PartitionAndMerge(mid+1, end, lists);
+
+        return mergeTwoLists(L1, L2);
+    }
+    public ListNode mergeKLists(ListNode[] lists) {
+        int k = lists.length;
+        if(k == 0)
+            return null;
+        return PartitionAndMerge(0, k-1, lists);
+    }
+}
