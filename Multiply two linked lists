@@ -1,0 +1,19 @@
+class Solution {
+    public long convert(Node head) {
+        long number = 0;
+        int mod = 1000000007;  // To handle large numbers
+
+        while (head != null) {
+            number = (number * 10 + head.data) % mod;
+            head = head.next;
+        }
+        return number;
+    }
+    public long multiplyTwoLists(Node first, Node second) {
+        // Code here
+        long number1 = convert(first);
+        long number2 = convert(second);
+
+        return (number1 * number2) % 1000000007;
+    }
+}
