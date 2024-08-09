@@ -1,0 +1,16 @@
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null) return null;
+
+        ListNode A = headA;
+        ListNode B = headB;
+
+        //if a and b have different length then we will stop the loop after 2nd iteration
+        while(A != B){
+            //for the end of first iteration we just reset the pointer to the head of another LL
+            A = A == null ? headB : A.next;
+            B = B == null ? headA : B.next;
+        }
+        return A;
+    }
+}
