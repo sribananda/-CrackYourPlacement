@@ -1,0 +1,71 @@
+class Solution {
+    // Utility function to print a list with `down` and `next` pointers
+    public static void printOriginalList(Node head)
+    {
+        if (head == null) {
+            return;
+        }
+ 
+        System.out.print(" " + head.val + " ");
+ 
+        if (head.child != null)
+        {
+            System.out.print("[");
+            printOriginalList(head.child);
+            System.out.print("]");
+        }
+ 
+        printOriginalList(head.next);
+    }
+    // Utility function to print a linked list
+    public static void printFlattenedList(Node head)
+    {
+        while (head != null)
+        {
+            System.out.print(head.val + " -> ");
+            head = head.next;
+        }
+        System.out.println("null");
+    }
+    public Node flatten(Node head) {
+        // base case
+        if (head == null) {
+            return null;
+        }
+
+        Node curr = head;
+
+        while (curr != null) {
+            // If the current node has a child, we need to flatten it
+            if (curr.child != null) {
+                Node next = curr.next; // Store the next pointer
+
+                // Flatten the child list
+                Node child = flatten(curr.child);
+
+                // Insert the flattened child list into the main list
+                curr.next = child;
+                child.prev = curr;
+
+                // Move to the end of the flattened child list
+                while (child.next != null) {
+                    child = child.next;
+                }
+
+                // Reconnect the next part of the list
+                child.next = next;
+                if (next != null) {
+                    next.prev = child;
+                }
+
+                // Nullify the child pointer as it's now part of the main list
+                curr.child = null;
+            }
+
+            // Move to the next node
+            curr = curr.next;
+        }
+
+        return head;
+    }
+}
