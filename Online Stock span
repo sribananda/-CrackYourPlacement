@@ -1,0 +1,53 @@
+class StockSpanner {
+    int index;
+    Stack<Pair<Integer, Integer>> st;
+    public StockSpanner() {
+        index = -1;
+        st = new Stack<>();
+    }
+    
+    public int next(int price) {
+        index += 1;
+        int ans;
+
+        while (!st.isEmpty() && st.peek().getKey() <= price) {
+            st.pop();
+        }
+        ans = index - (st.isEmpty() ? -1 : st.peek().getValue());
+        st.push(new Pair<>(price, index));
+
+        return ans;
+    }
+}
+// Pair class (Java does not have a built-in Pair class like C++)
+class Pair<K, V> {
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    public void setKey(K key) {
+        this.key = key;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
